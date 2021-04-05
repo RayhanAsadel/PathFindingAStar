@@ -156,12 +156,12 @@ def main():
     inputNode1 = str(input("Node Asal : "))
     inputNode2 = str(input("Node Tujuan : "))
 
-    for i in range (len(arrNode)):
-        for j in range (len(arrNode)):
-            if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
-                path = astar_search(graph, heuristic, arrNode[i], arrNode[j])
-            else:
-                path = None
-    print("Path :", path)
+    # for i in range (len(arrNode)):
+    #     for j in range (len(arrNode)):
+    #         if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
+    #             path = astar_search(graph, heuristic, arrNode[i], arrNode[j])
+    #         else:
+    #             path = None
+    # print("Path :", path)
 
 if __name__ == "__main__": main()

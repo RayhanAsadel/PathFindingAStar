@@ -1,4 +1,5 @@
 #File gabungan
+import math
 
 #Parsing file menjadi array of node, format : [Name, X, Y, {Neighbors : Bobot}]
 def inputFile():
@@ -14,7 +15,7 @@ def inputFile():
     X = 0
     Y = 0
 
-    Namasimpul = str("")
+    NamaSimpul = str("")
     ArrSimpul = []      #Arr berisi list (Nama, X, Y) dari simpul
     jmlNode = int(arrFile[0])
     MatriksAdjacency = [ [ -1 for i in range(jmlNode) ] for j in range(jmlNode) ]
@@ -96,6 +97,13 @@ class Node:
     def __repr__(self):
         return (self.name)
 
+def Heuristic(node1:Node, node2:Node):
+    x1 = node1.x
+    x2 = node2.x
+    y1 = node1.y
+    y2 = node2.y
+    d = math.sqrt((math.pow((x2-x1), 2))+(math.pow((y2-y1), 2)))
+    return d
 
 def main():
     file = inputFile()
@@ -104,7 +112,8 @@ def main():
     for i in range (len(file)):
         arrNode.append(Node(file[i][0], None, file[i][1], file[i][2], file[i][3]))
     print(arrNode)
-    print(arrNode[0].y)
+    print(Heuristic(arrNode[4], arrNode[1]))
+    print(Heuristic(arrNode[1], arrNode[4]))
 
 
 if __name__ == "__main__": main()

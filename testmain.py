@@ -1,6 +1,6 @@
 #File gabungan
 from os import name
-from InputFile import ArrSimpul
+# from InputFile import ArrSimpul
 import math
 
 #Parsing file menjadi array of node, format : [Name, X, Y, {Neighbors : Bobot}]
@@ -133,7 +133,6 @@ class Graph:
         nodes = s1.union(s2)
         return list(nodes)
 
-
 def main():
     file = inputFile()
     print(file)
@@ -157,12 +156,12 @@ def main():
     inputNode1 = str(input("Node Asal : "))
     inputNode2 = str(input("Node Tujuan : "))
 
-    # for i in range (len(arrNode)):
-    #     for j in range (len(arrNode)):
-    #         if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
-    #             path = astar_search(graph, heuristic, arrNode[i], arrNode[j], filename)
-    #         else:
-    #             path = None
-    # print("Path :", path)
+    for i in range (len(arrNode)):
+        for j in range (len(arrNode)):
+            if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
+                path = astar_search(graph, heuristic, arrNode[i], arrNode[j])
+            else:
+                path = None
+    print("Path :", path)
 
 if __name__ == "__main__": main()

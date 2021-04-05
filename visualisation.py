@@ -1,0 +1,11 @@
+import networkx
+graph = networkx.Graph()
+graph.add_edge('A', 'B', weight=4)
+graph.add_edge('B', 'D', weight=2)
+graph.add_edge('A', 'C', weight=3)
+graph.add_edge('C', 'D', weight=4)
+networkx.shortest_path(graph, 'A', 'D', weight='weight')
+networkx.draw(graph)
+networkx.draw_random(graph)
+networkx.draw_circular(graph)
+networkx.draw_spectral(graph)

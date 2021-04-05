@@ -81,6 +81,7 @@ def astar_search(graph, heuristics, start, end):
             return path[::-1]
         # Get neighbours
         neighbors = graph.get(current_node.name)
+        print(neighbors)
         # Loop neighbors
         for key, value in neighbors.items():
             # Create a neighbor node

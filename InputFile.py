@@ -31,25 +31,6 @@ for i in range (1, jmlNode+1):
             NamaSimpul = stringTempCoor
     ArrSimpul.append([NamaSimpul,X,Y])
 
-connected = []
-# for i in range(jmlNode+1, len(arrFile)):
-#     tempangka = 0
-#     tempbobot = []
-#     stringTempCoor = str("")
-#     for j in range(len(arrFile[i])):
-#         if (arrFile[i][j] != ' '):
-#             tempangka = int(stringTempCoor)
-#             stringTempCoor = ""
-#         elif (arrFile[i][j] != ' ' and arrFile[i][j] != '0'):
-#             stringTempCoor = stringTempCoor+arrFile[i][j]
-#     connected.append(tempbobot)
-# for l in range (5):
-#     for k in range (3):
-#         print(arrFile[l][k])
-        # if (arrFile[i][k] != '0' or arrFile[i][k] != ' '):
-        #     connected.append([ArrSimpul[k][0], arrFile[i][k]])
-print()
-
 NilaiBobot = int(0)
 k = int(0)
 l = int(0)
@@ -61,7 +42,7 @@ for i in range (jmlNode+1, len(arrFile)):
     for j in range (len(arrFile[i])):
         if (arrFile[i][j] == '[' and arrFile[i][j] == "]"):
             continue
-        elif (arrFile[i][j] == ' '):
+        elif (arrFile[i][j] == ' ' or arrFile[i][j] ==']'):
             NilaiBobot = int(stringTempCoor)
             MatriksAdjacency[k][l] = NilaiBobot
             stringTempCoor = ""
@@ -70,16 +51,21 @@ for i in range (jmlNode+1, len(arrFile)):
             stringTempCoor = stringTempCoor+arrFile[i][j]
         
     k = k+1
-        
+arrNodeName = []
+for i in range (len(ArrSimpul)):
+    arrNodeName.append(ArrSimpul[i][0])       
+for i in range(len(ArrSimpul)):
+    temp = {}
+    k = 0
+    for j in range (len(MatriksAdjacency[i])):
+        temp[arrNodeName[k]] = MatriksAdjacency[i][j]
+        k+=1
+    neightbors = {}
+    for l in temp.keys():
+        if (temp[l] != 0):
+            neightbors[l] = temp[l]
+    (ArrSimpul[i]).append(neightbors)
 
-
-print(ArrSimpul)    
-print(connected)
-print(MatriksAdjacency)
-#for i in range(len(MatriksAdjacency)):
-#    for j in range (len(MatriksAdjacency)):
-#        print(MatriksAdjacency[i][j],end ="")
-#    print() 
-# print(ArrSimpul[0][0]) 
-# print(ArrSimpul[0][1]) 
-# print(ArrSimpul[0][2])  
+print("list of node [Name, X, Y, {Neighbors : Bobot}]\n")
+for i in range (len(ArrSimpul)):
+    print("Node", i+1,  ":" ,ArrSimpul[i])

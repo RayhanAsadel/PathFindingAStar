@@ -35,6 +35,8 @@ NilaiBobot = int(0)
 k = int(0)
 l = int(0)
 
+
+#Buat Matriks ketetanggan berbobot
 for i in range (jmlNode+1, len(arrFile)):
     #print(arrFile[i])
     stringTempCoor = str("")
@@ -51,6 +53,8 @@ for i in range (jmlNode+1, len(arrFile)):
             stringTempCoor = stringTempCoor+arrFile[i][j]
         
     k = k+1
+
+
 arrNodeName = []
 for i in range (len(ArrSimpul)):
     arrNodeName.append(ArrSimpul[i][0])       
@@ -66,6 +70,15 @@ for i in range(len(ArrSimpul)):
             neightbors[l] = temp[l]
     (ArrSimpul[i]).append(neightbors)
 
-print("list of node [Name, X, Y, {Neighbors : Bobot}]\n")
+print("list of node [Name, X, Y, {Neighbors : Bobot}]\n")   #Value bobot, key simpul neighbors
 for i in range (len(ArrSimpul)):
     print("Node", i+1,  ":" ,ArrSimpul[i])
+
+"""
+print((ArrSimpul[0][3].items()))        get semua dict item
+print((ArrSimpul[0][3].keys()))         get semua key
+print((ArrSimpul[0][3].values()))       get semua value
+
+print((ArrSimpul[0][3].get('B')))       kalo ketemu b return valuenya
+print((ArrSimpul[0][3].get('b',"not found"))) kalo gaektemu return not found
+"""

@@ -19,25 +19,25 @@ def inputFile():
     NamaSimpul = str("")
     ArrSimpul = []      #Arr berisi list (Nama, X, Y) dari simpul
     jmlNode = int(arrFile[0])
-    MatriksAdjacency = [ [ -1 for i in range(jmlNode) ] for j in range(jmlNode) ]
+    MatriksAdjacency = [ [ 0 for i in range(jmlNode) ] for j in range(jmlNode) ]
     for i in range (1, jmlNode+1):
         #print(arrFile[i])
         stringTempCoor = str("")
         for j in range (len(arrFile[i])):
 
             if (arrFile[i][j] == ','):
-                X = int(stringTempCoor)
+                X = float(stringTempCoor)
                 stringTempCoor = ""
 
             elif (arrFile[i][j] == ' '):
-                Y = int(stringTempCoor)
+                Y = float(stringTempCoor)
                 stringTempCoor = ""
             elif (arrFile[i][j] != ',' and arrFile[i][j] != ' '):
                 stringTempCoor = stringTempCoor+arrFile[i][j]
                 NamaSimpul = stringTempCoor
         ArrSimpul.append([NamaSimpul,X,Y])
 
-    NilaiBobot = int(0)
+    NilaiBobot = float(0)
     k = int(0)
     l = int(0)
 
@@ -49,7 +49,7 @@ def inputFile():
             if (arrFile[i][j] == '[' and arrFile[i][j] == "]"):
                 continue
             elif (arrFile[i][j] == ' ' or arrFile[i][j] ==']'):
-                NilaiBobot = int(stringTempCoor)
+                NilaiBobot = float(stringTempCoor)
                 MatriksAdjacency[k][l] = NilaiBobot
                 stringTempCoor = ""
                 l = l+1
@@ -75,7 +75,7 @@ def inputFile():
 
 class Node:
     # Initialize the class
-    def __init__(self, name:str, parent:str, x:int, y:int, neightbor:dict):
+    def __init__(self, name:str, parent:str, x:float, y:float, neightbor:dict):
         self.name = name
         self.parent = parent
         self.neightbor = neightbor
@@ -101,6 +101,24 @@ def Heuristic(node1:Node, node2:Node):
     y2 = node2.y
     d = math.sqrt((math.pow((x2-x1), 2))+(math.pow((y2-y1), 2)))
     return d
+
+# def Haversine(node1:Node, node2:Node):
+#     lon1 =  math.radians(node1.x)
+#     lon2 =  math.radians(node2.x)
+#     lat1 =  math.radians(node1.y)
+#     lat2 =  math.radians(node2.y)
+
+#     R = 6373.0
+
+#     dlon = lon2 - lon1
+
+#     dlat = lat2 - lat1
+
+#     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+
+#     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+#     distance = R * c
+#     return distance
 
 class Graph:
     # Initialize the class
@@ -132,14 +150,14 @@ class Graph:
         s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
         nodes = s1.union(s2)
         return list(nodes)
+
 file = inputFile()
-print(file)
 arrNode = []
 for i in range (len(file)):
     arrNode.append(Node(file[i][0], None, file[i][1], file[i][2], file[i][3]))
+
 # A* search
 def astar_search(graph, heuristics, start, end):
-    
     # Create lists for open nodes and closed nodes
     open = []
     closed = []
@@ -168,17 +186,17 @@ def astar_search(graph, heuristics, start, end):
             return path[::-1]
         # Get neighbours
         neighbors = graph.get(current_node.name)
-        print(current_node.name)
-        print(neighbors)
+        # print(current_node.name)
+        # print(neighbors)
         # Loop neighbors
         for key, value in neighbors.items():
-            print(key)
+            # print(key)
             for i in range (len(arrNode)):
                 if (arrNode[i].name == key):
             # Create a neighbor node
                     neighbor = Node(key, current_node, arrNode[i].x, arrNode[i].y, arrNode[i].neightbor)
             # Check if the neighbor is in the closed list
-            print(neighbor.name, neighbor.parent)
+            # print(neighbor.name, neighbor.parent)
             if(neighbor in closed):
                 continue
             # Calculate full path cost
@@ -199,32 +217,47 @@ def add_to_open(open, neighbor):
             return False
     return True
 
-# file = inputFile()
-# print(file)
-# arrNode = []
-# for i in range (len(file)):
-#     arrNode.append(Node(file[i][0], None, file[i][1], file[i][2], file[i][3]))
-# print(arrNode)z
-# print(Heuristic(arrNode[4], arrNode[1]))
-# print(Heuristic(arrNode[1], arrNode[4]))
-graph = Graph()
-heuristic = {} #dihitung dari node 1
-for i in range (len(arrNode)):
-    heuristic[arrNode[i].name] = Heuristic(arrNode[0], arrNode[i]) 
-print(heuristic)
 
-for i in range (len(arrNode)):
-    for j in arrNode[i].neightbor:
-        print (arrNode[i].name, "connected to", j, "with distace", arrNode[i].neightbor[j])
-        graph.connect(arrNode[i].name, j, arrNode[i].neightbor[j])
+def main():
+    # file = inputFile()
+    # print(file)
+    # arrNode = []
+    # for i in range (len(file)):
+    #     arrNode.append(Node(file[i][0], None, file[i][1], file[i][2], file[i][3]))
+    # print(arrNode)z
+    # print(Heuristic(arrNode[4], arrNode[1]))
+    # print(Heuristic(arrNode[1], arrNode[4]))
+    graph = Graph()
+    # heuristic = {} #dihitung dari node 1
+    # for i in range (len(arrNode)):
+    #     heuristic[arrNode[i].name] = Heuristic(arrNode[0], arrNode[i]) 
+    # print(heuristic)
 
-inputNode1 = str(input("Node Asal : "))
-inputNode2 = str(input("Node Tujuan : "))
+    # haversine = {} #dihitung dari node 1
+    heuristic = {}
+    for i in range (len(arrNode)):
+        # haversine[arrNode[i].name] = Haversine(arrNode[0], arrNode[i]) 
+        heuristic[arrNode[i].name] = Heuristic(arrNode[0], arrNode[i]) 
 
-# for i in range (len(arrNode)):
-#     for j in range (len(arrNode)):
-#         if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
-path = astar_search(graph, heuristic, inputNode1, inputNode2)
+    for i in range (len(arrNode)):
+        for j in arrNode[i].neightbor:
+            # print (arrNode[i].name, "connected to", j, "with distace", arrNode[i].neightbor[j])
+            graph.connect(arrNode[i].name, j, arrNode[i].neightbor[j])
+    print(graph.graph_dict)
+
+    inputNode1 = str(input("Node Asal : "))
+    inputNode2 = str(input("Node Tujuan : "))
+
+    path = astar_search(graph, heuristic, inputNode1, inputNode2)
         # else:
         #     path = None
-print("Path :", path)
+    print("Path :", path)
+    # for i in range (len(arrNode)):
+    #     for j in range (len(arrNode)):
+    #         if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
+    #             path = astar_search(graph, heuristic, arrNode[i], arrNode[j])
+    #         else:
+    #             path = None
+    # print("Path :", path)
+
+if __name__ == "__main__": main()

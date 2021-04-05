@@ -1,11 +1,9 @@
 # This class represent a node
 class Node:
     # Initialize the class
-    def __init__(self, name:str, parent:str, x:int, y:int):
+    def __init__(self, name:str, parent:str):
         self.name = name
         self.parent = parent
-        self.x = x # Coordinat X
-        self.y = y # Coordinat Y
         self.g = 0 # Distance to start node
         self.h = 0 # Distance to goal node
         self.f = 0 # Total cost
@@ -112,6 +110,7 @@ def main():
     graph = Graph()
     # Create graph connections (Actual distance)
     graph.connect('A', 'B', 5)
+    graph.connect('B', 'B', 5)
     graph.connect('A', 'E', 10)
     graph.connect('B', 'C', 8)
     graph.connect('B', 'F', 5)
@@ -125,14 +124,14 @@ def main():
     graph.make_undirected()
     # Create heuristics (straight-line distance, air-travel distance)
     heuristics = {}
-    heuristics['A'] = 10
-    heuristics['B'] = 11
-    heuristics['C'] = 16
-    heuristics['D'] = 20
-    heuristics['E'] = 0
-    heuristics['F'] = 10
-    heuristics['G'] = 9
-    heuristics['H'] = 18
+    heuristics['A'] = 0
+    heuristics['B'] = 5.0
+    heuristics['C'] = 13.0
+    heuristics['D'] = 18.0
+    heuristics['E'] = 10.0
+    heuristics['F'] = 10.295630140987
+    heuristics['G'] = 13.45362404707371
+    heuristics['H'] = 20.591260281974
     # Run the search algorithm
     node1 = str(input("Node Asal : "))
     node2 = str(input("Node Tujuan : "))

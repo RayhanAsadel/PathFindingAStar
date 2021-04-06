@@ -227,12 +227,15 @@ def add_to_open(open, neighbor):
 
 def main():
     arrNode = make_ArrayofNode()
-    # file = inputFile()
-    # print(file)
-    # arrayOfNode = []
-    # for i in range (len(file)):
-    #     arrNode.append(Node(file[i][0], None, file[i][1], file[i][2], file[i][3]))
-    # print(arrNode)z
+
+    print("Berikut adalah isi dari Array of Node:")
+    print("(NamaSimpul, KoordinatX, KoordinatY, {kumpulan tetangga beserta bobot)")
+    
+    #for i in range (len(arrNode)):
+        
+         #print(arrNode[i].values())
+    
+    print(arrNode)
     # print(Heuristic(arrNode[4], arrNode[1]))
     # print(Heuristic(arrNode[1], arrNode[4]))
     graph = Graph()

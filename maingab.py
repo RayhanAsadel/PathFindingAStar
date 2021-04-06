@@ -148,11 +148,11 @@ class Graph:
         else:
             return links.get(b)
     # Return a list of nodes in the graph
-    def nodes(self):
-        s1 = set([k for k in self.graph_dict.keys()])
-        s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
-        nodes = s1.union(s2)
-        return list(nodes)
+    # def nodes(self):
+    #     s1 = set([k for k in self.graph_dict.keys()])
+    #     s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
+    #     nodes = s1.union(s2)
+    #     return list(nodes)
 
 def make_ArrayofNode():
     file = inputFile()

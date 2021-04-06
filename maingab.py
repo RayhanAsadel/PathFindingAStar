@@ -58,6 +58,8 @@ def inputFile():
             elif (arrFile[i][j] != '[' and arrFile[i][j] != ' ' and arrFile[i][j] != ']'):
                 stringTempCoor = stringTempCoor+arrFile[i][j]
         k = k+1
+    print("Matriks Adjacency")
+    print(MatriksAdjacency)
     
     #Memasukan dictionary ketetanggan pada arr simpul, menjadi list (Nama, X, Y, {Simpul : bobot}) dari simpul
     arrNodeName = []
@@ -74,6 +76,9 @@ def inputFile():
             if (temp[l] != 0):
                 neightbors[l] = temp[l]
         (ArrSimpul[i]).append(neightbors)
+    for i in range (len(ArrSimpul)):
+        print("Node", i+1,  ":" ,ArrSimpul[i])
+    
     return (ArrSimpul)
 
 class Node:
@@ -96,7 +101,7 @@ class Node:
     # Print node
     def __repr__(self):
         return (self.name)
-
+"""
 def Heuristic(node1:Node, node2:Node):
     x1 = node1.x
     x2 = node2.x
@@ -104,7 +109,7 @@ def Heuristic(node1:Node, node2:Node):
     y2 = node2.y
     d = math.sqrt((math.pow((x2-x1), 2))+(math.pow((y2-y1), 2)))
     return d
-
+"""
 def Haversine(node1:Node, node2:Node):
     lon1 =  math.radians(node1.x)
     lon2 =  math.radians(node2.x)
@@ -148,11 +153,13 @@ class Graph:
         else:
             return links.get(b)
     # Return a list of nodes in the graph
-    # def nodes(self):
-    #     s1 = set([k for k in self.graph_dict.keys()])
-    #     s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
-    #     nodes = s1.union(s2)
-    #     return list(nodes)
+    """
+    def nodes(self):
+        s1 = set([k for k in self.graph_dict.keys()])
+        s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
+        nodes = s1.union(s2)
+        return list(nodes)
+    """
 
 def make_ArrayofNode():
     file = inputFile()
@@ -226,49 +233,35 @@ def add_to_open(open, neighbor):
 
 
 def main():
-    arrNode = make_ArrayofNode()
+    arrNode2 = make_ArrayofNode()
 
     print("Berikut adalah isi dari Array of Node:")
-    print("(NamaSimpul, KoordinatX, KoordinatY, {kumpulan tetangga beserta bobot)")
+
+    print("array of node [Name, X, Y, {Neighbors : Bobot}]\n")   #Value bobot, key simpul neighbors
     
-    #for i in range (len(arrNode)):
-        
-         #print(arrNode[i].values())
+    for i in range (len(arrNode2)):
+        print("Node", i+1,  ":" ,arrNode2[i].name,arrNode2[i].x,arrNode2[i].y,arrNode2[i].neightbor, arrNode2[i].g, arrNode2[i].h, arrNode2[i].f)
     
-    print(arrNode)
-    # print(Heuristic(arrNode[4], arrNode[1]))
-    # print(Heuristic(arrNode[1], arrNode[4]))
     graph = Graph()
-    # heuristic = {} #dihitung dari node 1
-    # for i in range (len(arrNode)):
-    #     heuristic[arrNode[i].name] = Heuristic(arrNode[0], arrNode[i]) 
-    # print(heuristic)
-
-    # haversine = {} #dihitung dari node 1
-    heuristic = {}
-    for i in range (len(arrNode)):
-        # haversine[arrNode[i].name] = Haversine(arrNode[0], arrNode[i]) 
-        heuristic[arrNode[i].name] = Heuristic(arrNode[0], arrNode[i]) 
-
-    for i in range (len(arrNode)):
-        for j in arrNode[i].neightbor:
+  
+    haversine = {}
+    for i in range (len(arrNode2)):
+        haversine[arrNode2[i].name] = Haversine(arrNode2[0], arrNode2[i]) 
+        #heuristic[arrNode2[i].name] = Heuristic(arrNode2[0], arrNode2[i]) 
+    
+    for i in range (len(arrNode2)):
+        for j in arrNode2[i].neightbor:
             # print (arrNode[i].name, "connected to", j, "with distace", arrNode[i].neightbor[j])
-            graph.connect(arrNode[i].name, j, arrNode[i].neightbor[j])
-    print(graph.graph_dict)
+            graph.connect(arrNode2[i].name, j, arrNode2[i].neightbor[j])
+    #print(graph.graph_dict)
 
     inputNode1 = str(input("Node Asal : "))
     inputNode2 = str(input("Node Tujuan : "))
 
-    path = astar_search(graph, heuristic, inputNode1, inputNode2, arrNode)
-        # else:
-        #     path = None
+    path = astar_search(graph, haversine, inputNode1, inputNode2, arrNode2)
+       
     print("Path :", path)
-    # for i in range (len(arrNode)):
-    #     for j in range (len(arrNode)):
-    #         if (arrNode[i].name == inputNode1 and arrNode[j].name == inputNode2):
-    #             path = astar_search(graph, heuristic, arrNode[i], arrNode[j])
-    #         else:
-    #             path = None
-    # print("Path :", path)
+    print(haversine)
+   
 
 if __name__ == "__main__": main()

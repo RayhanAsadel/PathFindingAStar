@@ -1,10 +1,15 @@
-#File gabungan
+#Main.py
 from os import name
-# from InputFile import ArrSimpul
 import math
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import math
+import pandas as pd
 
 #Parsing file menjadi array of node, format : [Name, X, Y, {Neighbors : Bobot}]
 def inputFile():
+    print()
     filename = str(input("Masukan Nama File (Nama.txt): ")) 
     arrFile = []
 
@@ -58,8 +63,8 @@ def inputFile():
             elif (arrFile[i][j] != '[' and arrFile[i][j] != ' ' and arrFile[i][j] != ']'):
                 stringTempCoor = stringTempCoor+arrFile[i][j]
         k = k+1
-    print("Matriks Adjacency")
-    print(MatriksAdjacency)
+    # print("Matriks Adjacency")
+    # print(MatriksAdjacency)
     
     #Memasukan dictionary ketetanggan pada arr simpul, menjadi list (Nama, X, Y, {Simpul : bobot}) dari simpul
     arrNodeName = []
@@ -76,90 +81,64 @@ def inputFile():
             if (temp[l] != 0):
                 neightbors[l] = temp[l]
         (ArrSimpul[i]).append(neightbors)
-    for i in range (len(ArrSimpul)):
-        print("Node", i+1,  ":" ,ArrSimpul[i])
     
     return (ArrSimpul)
 
 class Node:
-    # Initialize the class
     def __init__(self, name:str, parent:str, x:float, y:float, neightbor:dict):
         self.name = name
         self.parent = parent
         self.neightbor = neightbor
-        self.x = x # Coordinat X
-        self.y = y # Coordinat Y
-        self.g = 0 # Distance to start node
-        self.h = 0 # Distance to goal node
-        self.f = 0 # Total cost
-    # Compare nodes
+        self.x = x # koordinat X
+        self.y = y # koordinat Y
+        self.g = 0 # jarak dari simpul asal
+        self.h = 0 # jarak ke simpul tujuan
+        self.f = 0 # Total jarak
+    # Compare
     def __eq__(self, other:str):
         return self.name == other
-    # Sort nodes
+    # Sort
     def __lt__(self, other):
          return self.f < other.f
-    # Print node
+    # Print
     def __repr__(self):
         return (self.name)
-"""
-def Heuristic(node1:Node, node2:Node):
-    x1 = node1.x
-    x2 = node2.x
-    y1 = node1.y
-    y2 = node2.y
-    d = math.sqrt((math.pow((x2-x1), 2))+(math.pow((y2-y1), 2)))
-    return d
-"""
+
 def Haversine(node1:Node, node2:Node):
     lon1 =  math.radians(node1.x)
     lon2 =  math.radians(node2.x)
     lat1 =  math.radians(node1.y)
     lat2 =  math.radians(node2.y)
-
     R = 6373000
-
     dlon = lon2 - lon1
-
     dlat = lat2 - lat1
-
     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
-
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     distance = R * c
     return distance
 
 class Graph:
-    # Initialize the class
     def __init__(self, graph_dict=None, directed=True):
         self.graph_dict = graph_dict or {}
         self.directed = directed
         if not directed:
             self.make_undirected()
-    # Create an undirected graph by adding symmetric edges
     def make_undirected(self):
         for a in list(self.graph_dict.keys()):
             for (b, dist) in self.graph_dict[a].items():
                 self.graph_dict.setdefault(b, {})[a] = dist
-    # Add a link from A and B of given distance, and also add the inverse link if the graph is undirected
-    def connect(self, A, B, distance=1):
+    def connect(self, A, B, distance = 1):
         self.graph_dict.setdefault(A, {})[B] = distance
         if not self.directed:
             self.graph_dict.setdefault(B, {})[A] = distance
     # Get neighbors or a neighbor
     def get(self, a, b=None):
-        links = self.graph_dict.setdefault(a, {})
+        neighbor = self.graph_dict.setdefault(a, {})
         if b is None:
-            return links
+            return neighbor
         else:
-            return links.get(b)
-    # Return a list of nodes in the graph
-    """
-    def nodes(self):
-        s1 = set([k for k in self.graph_dict.keys()])
-        s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
-        nodes = s1.union(s2)
-        return list(nodes)
-    """
+            return neighbor.get(b)
+
 def make_ArrayofNode():
     file = inputFile()
     arrNode = []
@@ -168,97 +147,128 @@ def make_ArrayofNode():
     return arrNode
   
 # A* search
-def astar_search(graph, heuristics, start, end, arrayOfNode):
-    # Create lists for open nodes and closed nodes
-    #arrNode = make_ArrayofNode()
-    open = []
-    closed = []
-    # Create a start node and an goal node
+def Astar(graph, heuristics, start, end, arrayOfNode):
+    openList = [] # Simpul hidup
+    closedList = [] # Simpul yang sudah dikunjungi
+    # Inisiasi simpul start dan goal
     start_node = Node(start, None, None, None, None)
     goal_node = Node(end, None, None, None, None)
-    # Add the start node
-    open.append(start_node)
+    # Masukkan simpul start ke openList
+    openList.append(start_node)
     
-    # Loop until the open list is empty
-    while len(open) > 0:
-        # Sort the open list to get the node with the lowest cost first
-        open.sort()
-        # Get the node with the lowest cost
-        current_node = open.pop(0)
-        # Add the current node to the closed list
-        closed.append(current_node)
-        # Check if we have reached the goal, return the path
-        if current_node == goal_node:
+    # Loop hingga openList kosong
+    while len(openList) > 0:
+        openList.sort()
+        current_node = openList.pop(0) # Node dengan jarak terkecil
+        closedList.append(current_node) # Masukkan ke closedList
+        if current_node == goal_node: # Jika node yang di cek adalah simpul tujuan
             path = []
             while current_node != start_node:
                 path.append(current_node.name + ': ' + str(current_node.g))
                 current_node = current_node.parent
             path.append(start_node.name + ': ' + str(start_node.g))
-            # Return reversed path
-            return path[::-1]
+            return path[::-1] #return reversed path
         # Get neighbours
         neighbors = graph.get(current_node.name)
-        # print(current_node.name)
-        # print(neighbors)
         # Loop neighbors
-        for key, value in neighbors.items():
-            # print(key)
+        for key,value in neighbors.items():
             for i in range (len(arrayOfNode)):
                 if (arrayOfNode[i].name == key):
-            # Create a neighbor node
+            # Inisiasi node neighbor dengan parent current_node
                     neighbor = Node(key, current_node, arrayOfNode[i].x, arrayOfNode[i].y, arrayOfNode[i].neightbor)
-            # Check if the neighbor is in the closed list
-            # print(neighbor.name, neighbor.parent)
-            if(neighbor in closed):
-                continue
-            # Calculate full path cost
+            # Check apakah neighbor di dalam closedList
+            if(neighbor in closedList):
+                continue # Abaikan
+            # Hitung f(n)
             neighbor.g = current_node.g + graph.get(current_node.name, neighbor.name)
             neighbor.h = heuristics.get(neighbor.name)
             neighbor.f = neighbor.g + neighbor.h
-            # Check if neighbor is in open list and if it has a lower f value
-            if(add_to_open(open, neighbor) == True):
-                # Everything is green, add neighbor to open list
-                open.append(neighbor)
-    # Return None, no path is found
-    return None
+            # Check apakah neighbor harus dimasukkan ke openList
+            if(CheckAddNode(openList, neighbor) == True):
+                openList.append(neighbor)
+    return None # Tidak terdapat lintasan
 
-# Check if a neighbor should be added to open list
-def add_to_open(open, neighbor):
+def CheckAddNode(open, neighbor):
     for node in open:
         if (neighbor == node and neighbor.f > node.f):
             return False
     return True
 
 def main():
-    arrNode2 = make_ArrayofNode()
-
-    print("Berikut adalah isi dari Array of Node:")
-
-    print("array of node [Name, X, Y, {Neighbors : Bobot}]\n")   #Value bobot, key simpul neighbors
-    
-    for i in range (len(arrNode2)):
-        print("Node", i+1,  ":" ,arrNode2[i].name,arrNode2[i].x,arrNode2[i].y,arrNode2[i].neightbor, arrNode2[i].g, arrNode2[i].h, arrNode2[i].f)
-    
+    arrNode = make_ArrayofNode()
     graph = Graph()
   
     haversine = {}
-    for i in range (len(arrNode2)):
-        haversine[arrNode2[i].name] = Haversine(arrNode2[0], arrNode2[i]) 
-        #heuristic[arrNode2[i].name] = Heuristic(arrNode2[0], arrNode2[i]) 
+    for i in range (len(arrNode)):
+        haversine[arrNode[i].name] = Haversine(arrNode[0], arrNode[i]) 
     
-    for i in range (len(arrNode2)):
-        for j in arrNode2[i].neightbor:
-            # print (arrNode[i].name, "connected to", j, "with distace", arrNode[i].neightbor[j])
-            graph.connect(arrNode2[i].name, j, arrNode2[i].neightbor[j])
-    #print(graph.graph_dict)
+    for i in range (len(arrNode)):
+        for j in arrNode[i].neightbor:
+            graph.connect(arrNode[i].name, j, arrNode[i].neightbor[j])
 
-    inputNode1 = str(input("Node Asal : "))
-    inputNode2 = str(input("Node Tujuan : "))
+    print("Daftar tempat/persimpangan jalan : ")
+    for i in range (len(arrNode)):
+        print(str(i+1)+ '.', arrNode[i])
+    print()
+    print("Masukkan Lokasi!")
+    inputNode1 = str(input("Lokasi Awal : "))
+    inputNode2 = str(input("Lokasi Tujuan : "))
 
-    path = astar_search(graph, haversine, inputNode1, inputNode2, arrNode2)
-       
-    print("Path :", path)
-    print(haversine)
+    path = Astar(graph, haversine, inputNode1, inputNode2, arrNode)
+    print()
+    print("Lintasan :", path)
+    # print(haversine)
+
+    
+    arraynamanode = []
+    temp =""
+    j
+    for i in range (len(path)):
+        j =0
+        temp =""
+        while (path[i][j]!=":"):
+            temp = temp+ str(path[i][j])
+            j=j+1
+        
+        arraynamanode.append(temp)
+
+    arrayBobot = []
+    tempbobot =""
+    for i in range (len(path)):
+        j = 0
+        tempbobot =""
+        while (path[i][j]!=' '):
+            j=j+1
+        j += 1
+        while (j != len(path[i])):
+            tempbobot = tempbobot+ str(path[i][j])
+            j=j+1
+        arrayBobot.append(float(tempbobot))
+
+    print("Total jarak terpendek antara", inputNode1, "dan", inputNode2, "adalah", arrayBobot[len(arrayBobot)-1], "meter")
+
+    G = nx.Graph()
+    for i in range(len(path)):
+        for j in range (len(arrNode)):
+            if (arraynamanode[i]==arrNode[j].name):
+                G.add_node(i,pos=(float(arrNode[j].x),float(arrNode[j].y)))
+    i = 0
+    j = 1
+    while (j<len(path)):
+        G.add_edge(i,j,weight=arrayBobot[j]-arrayBobot[i])
+        i = j
+        j = j+1
+
+    raw_labels = arraynamanode
+    lab_node = dict(zip(G.nodes, raw_labels))
+    pos=nx.get_node_attributes(G,'pos')
+    #nx.draw(G,pos)
+    labels = nx.get_edge_attributes(G, "weight")
+    nx.draw_networkx_edges(G, pos, edge_color='g',arrows=False)
+    nx.draw_networkx_nodes(G, pos, node_color='r',node_size=500)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels,font_size=8)
+    nx.draw_networkx_labels(G, pos, labels=lab_node, font_size=10, font_family="DejaVu Sans")
+    plt.show()
    
 
 if __name__ == "__main__": main()

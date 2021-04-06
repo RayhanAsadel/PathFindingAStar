@@ -160,7 +160,6 @@ class Graph:
         nodes = s1.union(s2)
         return list(nodes)
     """
-
 def make_ArrayofNode():
     file = inputFile()
     arrNode = []
@@ -168,7 +167,6 @@ def make_ArrayofNode():
         arrNode.append(Node(file[i][0], None, file[i][1], file[i][2], file[i][3]))
     return arrNode
   
-
 # A* search
 def astar_search(graph, heuristics, start, end, arrayOfNode):
     # Create lists for open nodes and closed nodes
@@ -230,7 +228,6 @@ def add_to_open(open, neighbor):
         if (neighbor == node and neighbor.f > node.f):
             return False
     return True
-
 
 def main():
     arrNode2 = make_ArrayofNode()

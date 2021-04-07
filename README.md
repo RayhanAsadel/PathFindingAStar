@@ -28,27 +28,27 @@ berikutnya pastikan input file txt ada dalam format berikut:
 ("KoordinatXTitikn>,"KoordinatYTitikn") "NamaTitikn"  
 [ Matriks ketetanggan berbobot dengan dimensi n         ]  
 [ dengan tiap baris diawali dan diakhiri dengan bracket ]  
-[                                                       ]  
+[ (bari ketiga matriks)                                 ]  
 
 sebagai contoh
 
-8
-(-6.892616,107.610423) Gerbang_Depan_ITB
-(-6.890464174304161,107.60724717865062) Kebun_Binatang_Bandung
-(-6.887407,107.611507) Gerbang_Belakang_ITB
-(-6.886107754151466,107.60814840083982) Sabuga_ITB
-(-6.886011891139484,107.61040145641657) Saraga_ITB
-(-6.884371565786224,107.61305147865777) McD_Dago
-(-6.893819336137485,107.61446768497895) RS_Borromeus
-(-6.890591990423812,107.60992938762139) Labtek5_ITB
-[0 428.35 0 0 0 0 419.13 233.94]
-[428.35 0 584.79 446.03 0 0 0 0]
-[0 584.79 0 427.57 193.57 0 0 398.50]
-[0 446.03 427.57 0 310.81 0 0 0]
-[0 0 193.57 310.81 0 339.15 0 0]
-[0 0 0 0 339.15 0 1000.00 0]
-[419.13 0 0 0 0 1000.00 0 0]
-[233.94 0 398.50 0 0 0 0 0]
+8  
+(-6.892616,107.610423) Gerbang_Depan_ITB  
+(-6.890464174304161,107.60724717865062) Kebun_Binatang_Bandung  
+(-6.887407,107.611507) Gerbang_Belakang_ITB  
+(-6.886107754151466,107.60814840083982) Sabuga_ITB  
+(-6.886011891139484,107.61040145641657) Saraga_ITB  
+(-6.884371565786224,107.61305147865777) McD_Dago  
+(-6.893819336137485,107.61446768497895) RS_Borromeus  
+(-6.890591990423812,107.60992938762139) Labtek5_ITB  
+[0 428.35 0 0 0 0 419.13 233.94]  
+[428.35 0 584.79 446.03 0 0 0 0]  
+[0 584.79 0 427.57 193.57 0 0 398.50]  
+[0 446.03 427.57 0 310.81 0 0 0]  
+[0 0 193.57 310.81 0 339.15 0 0]  
+[0 0 0 0 339.15 0 1000.00 0]  
+[419.13 0 0 0 0 1000.00 0 0]  
+[233.94 0 398.50 0 0 0 0 0]  
 
 Kesalahan dalam format file.txt akan membuat program tidak berjalan dengan benar.
 

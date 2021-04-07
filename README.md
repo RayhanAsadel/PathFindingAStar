@@ -11,7 +11,7 @@ mata kuliah Strategi Algoritma IF2121 Semester 2 2020/2021.
 * [Contact](#contact)
 
 ## Setup
-Describe how to install / setup your local environement / how to run main.py
+Describe how to install / setup your local environement / how to run src.py
 * Pertama ada install tools-tools dan library berikut pada python anda :
 * Python yang digunakan adalah Python versi 3 keatas
 * install pip (if not already installed)
@@ -52,8 +52,8 @@ sebagai contoh
 
 Kesalahan dalam format file.txt akan membuat program tidak berjalan dengan benar.
 
-* jika sudah memastikan format input text, maka bisa menjalankan main.py dengan command:
-* python main.py
+* jika sudah memastikan format input text, maka bisa menjalankan src.py dengan command:
+* python src.py
 
 ## Status
 Project is:  _finished_

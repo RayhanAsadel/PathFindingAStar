@@ -22,13 +22,13 @@ Describe how to install / setup your local environement / how to run main.py
 	* https://riptutorial.com/networkx/example/18973/installation-or-setup
 
 berikutnya pastikan input file txt ada dalam format berikut:
-'n jumlah node'
-("KoordinatXTitik1","KoordinatYTitik1") "NamaTitik1"
-("KoordinatXTitik2","KoordinatYTitik2") "NamaTitik2"
-("KoordinatXTitikn>,"KoordinatYTitikn") "NamaTitikn"
-[ Matriks ketetanggan berbobot dengan dimensi n         ]
-[ dengan tiap baris diawali dan diakhiri dengan bracket ]
-[                                                       ]
+*'n jumlah node'
+*("KoordinatXTitik1","KoordinatYTitik1") "NamaTitik1"
+*("KoordinatXTitik2","KoordinatYTitik2") "NamaTitik2"
+*("KoordinatXTitikn>,"KoordinatYTitikn") "NamaTitikn"
+*[ Matriks ketetanggan berbobot dengan dimensi n         ]
+*[ dengan tiap baris diawali dan diakhiri dengan bracket ]
+*[                                                       ]
 
 sebagai contoh
 

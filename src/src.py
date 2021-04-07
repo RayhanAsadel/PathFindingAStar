@@ -3,9 +3,7 @@ from os import name
 import math
 import matplotlib.pyplot as plt
 import networkx as nx
-import numpy as np
-import math
-import pandas as pd
+
 
 #Parsing file menjadi array of node, format : [Name, X, Y, {Neighbors : Bobot}]
 def inputFile():

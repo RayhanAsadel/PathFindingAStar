@@ -59,7 +59,7 @@ Kesalahan dalam format file.txt akan membuat program tidak berjalan dengan benar
 Project is:  _finished_
 
 ## Author
-M. Ibnu Syah Hafizh - (13519177)
+M. Ibnu Syah Hafizh - (13519177)  
 Rayhan Asadel - (13519196)
 
 

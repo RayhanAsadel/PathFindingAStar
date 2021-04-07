@@ -14,7 +14,7 @@ def inputFile():
     arrFile = []
 
     #Loop masukin baris ke array arrFile
-    with open(filename,'r') as file:
+    with open('../test/'+filename,'r') as file:
         for line in file:
             arrFile.append(line.replace('\n', '').replace('(','').replace(')',''))
 

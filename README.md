@@ -1,4 +1,5 @@
 # IMPLEMENTASI ALGORITMA A* UNTUK MENENTUKAN LINTASAN TERPENDEK
+# Implementasi Algoritma A* Untuk Menentukan Lintasan Terpendek
 > Algoritma A* (atau A star) dapat digunakan untuk menentukan lintasan terpendek dari suatu titik ke titik lain. Pada tugas kecil 3 ini, anda diminta menentukan lintasan terpendek berdasarakan peta Google Map jalan-jalan di kota Bandung. Dari ruas-ruas jalan di peta dibentuk graf. Simpul menyatakan persilangan jalan atau ujung jalan.
 Project ini merupakan bagian dari Tugas Kecil 3
 mata kuliah Strategi Algoritma IF2121 Semester 2 2020/2021.
